@@ -4,7 +4,7 @@ import numpy as np
 
 
 window = 10	
-misses = 2 
+misses = 2
 chain = list('CACAGTAGGCGCCGGCACACACAGCCCCGGGCCCCGGGCCGCCCCGGGCCGGCGGCCGCCGGCGCCGGCACACCGGCACAGCCGTACCGGCACAGTAGTACCGGCCGGCCGGCACACCGGCACACCGGGTACACACCGGGGCGCACACACAGGCGGGCGCCGGGCCCCGGGCCGTACCGGGCCGCCGGCGGCCCACAGGCGCCGGCACAGTACCGGCACACACAGTAGCCCACACACAGGCGGGCGGTAGCCGGCGCACACACACACAGTAGGCGCACAGCCGCCCACACACACCGGCCGGCCGGCACAGGCGGGCGGGCGCACACACACCGGCACAGTAGTAGGCGGCCGGCGCACAGCC')
 
 #Smoothing de Lindstone
@@ -63,7 +63,7 @@ print ntranx
 
 ########################################################
 d = dict()
-iteraciones = 10000
+iteraciones = 5000
 contador = 0
 
 bases1 = list('ATCG')
@@ -82,15 +82,17 @@ while iteraciones > contador:
 		#print prop, prop[j]
 
 	#counting number of valid k-mers
+	matches = 0
 	for i in xrange(n - window+1):
 		aux = chain[i:i+window]
-		if hammingDistance(aux, list(prop)) <= misses:
-			temp = ''.join(prop)
-		 	if temp in d:
-		 		d[temp] += 1
-		 	else:
-		 		d[temp] = 1
-		 	#print prop, aux, hammingDistance(prop, aux)
+		if hammingDistance(aux, list(prop)) <= misses: 
+			matches += 1
+		#print prop, aux, hammingDistance(prop, aux)
+	temp = ''.join(prop)
+	if temp in d and matches > 0:
+	 	d[temp] = matches
+	elif matches > 0:
+	 	d[temp] = matches
 	contador += 1
 	#print ''
 
@@ -98,6 +100,6 @@ while iteraciones > contador:
 d_view = [ (v,k) for k,v in d.iteritems() ]
 d_view.sort(reverse=False) # natively sort tuples by first element
 for v,k in d_view:
-    print "%s: %d" % (k,v)
+    print "%s: %d " % (k,v)
 
 
