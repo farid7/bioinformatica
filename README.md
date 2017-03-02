@@ -1,4 +1,4 @@
-# bioinformatica
+# k-mers
 
 El archivo .txt tiene los resultados impresos y ordenados por el número de apariciones en la cadena original,
 siendo la cadena con el mayor número de "hits" (20): "GCGCACACAC". 
